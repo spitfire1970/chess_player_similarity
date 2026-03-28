@@ -7,6 +7,9 @@ import numpy as np
 from data_objects.game import Game
 from encoder.model import Encoder
 
+server_address = 'chess-app-backend.nakul.one'
+server_api = f"https://{server_address}/stockfish_eval"
+
  
 def generate_alternative_pgns(game):    
     if not game:
@@ -264,7 +267,7 @@ class EndpointHandler():
             
             for move in moves:
                 board.push(move)
-            response = requests.post("http://16.16.211.183/stockfish_eval", json={"fen": board.fen()})
+            response = requests.post(server_api, json={"fen": board.fen()})
 
             if response.status_code == 400:
                 print(response.text)
@@ -278,7 +281,7 @@ class EndpointHandler():
             for move in ordered_moves:
                 test_board = board.copy()
                 test_board.push(board.parse_san(move_sans[move]))
-                response = requests.post("http://16.16.211.183/stockfish_eval", json={"fen": test_board.fen()})
+                response = requests.post(server_api, json={"fen": test_board.fen()})
                 if response.status_code == 500:
                     print('exiting ai_move endpoint status code after move')
                     return {"reply": best_move}
