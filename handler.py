@@ -7,8 +7,7 @@ import numpy as np
 from data_objects.game import Game
 from encoder.model import Encoder
 
-server_address = 'chess-app-backend.nakul.one'
-server_api = f"https://{server_address}/stockfish_eval"
+server_api = 'http://chess_app_backend-chess_app_backend-1:8000/stockfish_eval'
 
  
 def generate_alternative_pgns(game):    
